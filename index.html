@@ -27,7 +27,7 @@
 </head>
 <body>
   💩
-  <video id="troll" autoplay loop muted>
+  <video id="troll" loop>
     <source src="https://cdn.discordapp.com/attachments/1399533327249313843/1399533497085071492/lv_0_20250728202446.mp4?ex=688f4763&is=688df5e3&hm=ea9dacb5d56eb6c9b69e5aff60c0c95cd3a14d9e42a6d460b1e51778f624e0bf" type="video/mp4">
   </video>
 
@@ -38,6 +38,8 @@
     async function goFullScreenLoop() {
       video.style.display = "block";
       try {
+        video.muted = false;
+        video.volume = 1;
         await video.play();
         if (video.requestFullscreen) await video.requestFullscreen();
         else if (video.webkitRequestFullscreen) await video.webkitRequestFullscreen();
@@ -47,7 +49,7 @@
       }
     }
 
-    // Quando clica no emoji
+    // Clicou no emoji
     document.body.addEventListener("click", () => {
       if (!isPlaying) {
         isPlaying = true;
@@ -55,19 +57,19 @@
       }
     });
 
-    // Se tentar sair do fullscreen, entra de novo
+    // Saiu do fullscreen? Bota de novo
     document.addEventListener("fullscreenchange", () => {
       if (!document.fullscreenElement && isPlaying) {
         goFullScreenLoop();
       }
     });
 
-    // Evita que pausem o vídeo
+    // Impede que pausem
     video.addEventListener("pause", () => {
       if (isPlaying) video.play();
     });
 
-    // Tenta manter o fullscreen a cada 2s
+    // Reforça fullscreen a cada 2s
     setInterval(() => {
       if (!document.fullscreenElement && isPlaying) {
         goFullScreenLoop();
