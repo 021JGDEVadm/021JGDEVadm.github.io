@@ -1,1 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>💩</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      cursor: pointer;
+      font-size: 10rem;
+    }
+    video {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: 9999;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  💩
+  <video id="troll" autoplay loop muted>
+    <source src="https://cdn.discordapp.com/attachments/1399533327249313843/1399533497085071492/lv_0_20250728202446.mp4?ex=688f4763&is=688df5e3&hm=ea9dacb5d56eb6c9b69e5aff60c0c95cd3a14d9e42a6d460b1e51778f624e0bf" type="video/mp4">
+  </video>
 
+  <script>
+    const video = document.getElementById("troll");
+    let isPlaying = false;
+
+    async function goFullScreenLoop() {
+      video.style.display = "block";
+      try {
+        await video.play();
+        if (video.requestFullscreen) await video.requestFullscreen();
+        else if (video.webkitRequestFullscreen) await video.webkitRequestFullscreen();
+        else if (video.msRequestFullscreen) await video.msRequestFullscreen();
+      } catch (err) {
+        console.error("Erro ao tentar fullscreen:", err);
+      }
+    }
+
+    // Quando clica no emoji
+    document.body.addEventListener("click", () => {
+      if (!isPlaying) {
+        isPlaying = true;
+        goFullScreenLoop();
+      }
+    });
+
+    // Se tentar sair do fullscreen, entra de novo
+    document.addEventListener("fullscreenchange", () => {
+      if (!document.fullscreenElement && isPlaying) {
+        goFullScreenLoop();
+      }
+    });
+
+    // Evita que pausem o vídeo
+    video.addEventListener("pause", () => {
+      if (isPlaying) video.play();
+    });
+
+    // Tenta manter o fullscreen a cada 2s
+    setInterval(() => {
+      if (!document.fullscreenElement && isPlaying) {
+        goFullScreenLoop();
+      }
+    }, 2000);
+  </script>
+</body>
+</html>
