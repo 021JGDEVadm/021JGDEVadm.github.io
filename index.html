@@ -7,13 +7,26 @@
     body {
       margin: 0;
       background: black;
+      color: white;
+      font-family: sans-serif;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
       cursor: pointer;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .emoji {
       font-size: 10rem;
     }
+
     video {
       position: fixed;
       top: 0; left: 0;
@@ -26,7 +39,9 @@
   </style>
 </head>
 <body>
-  💩
+  <h1>Clique no cocô</h1>
+  <div class="emoji">💩</div>
+
   <video id="troll" loop>
     <source src="https://cdn.discordapp.com/attachments/1399533327249313843/1399533497085071492/lv_0_20250728202446.mp4?ex=688f4763&is=688df5e3&hm=ea9dacb5d56eb6c9b69e5aff60c0c95cd3a14d9e42a6d460b1e51778f624e0bf" type="video/mp4">
   </video>
@@ -49,7 +64,7 @@
       }
     }
 
-    // Clicou no emoji
+    // Clicou no corpo
     document.body.addEventListener("click", () => {
       if (!isPlaying) {
         isPlaying = true;
@@ -57,19 +72,16 @@
       }
     });
 
-    // Saiu do fullscreen? Bota de novo
     document.addEventListener("fullscreenchange", () => {
       if (!document.fullscreenElement && isPlaying) {
         goFullScreenLoop();
       }
     });
 
-    // Impede que pausem
     video.addEventListener("pause", () => {
       if (isPlaying) video.play();
     });
 
-    // Reforça fullscreen a cada 2s
     setInterval(() => {
       if (!document.fullscreenElement && isPlaying) {
         goFullScreenLoop();
